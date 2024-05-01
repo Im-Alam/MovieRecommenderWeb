@@ -1,5 +1,6 @@
-pandas
-flask
-numpy
-pickle
-requests
+pandas 2.1.2
+flask 3.0.2
+numpy 1.26.1
+pickle 4.0
+requests 2.31.0
+os
