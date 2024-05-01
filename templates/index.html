@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender</title>
+    <link rel="stylesheet" href="../static/styles/style.css">
+    <link rel="icon" href="../static/styles/images/moviecolor.svg">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body>
+    <nav class="navbar">
+        <h1 style="position:absolute; right:36px; top:44px; color:white;">{{user}}</h1>
+        <div class="navbar-brand">
+            <img src="../static/styles/images/movie.svg" alt="icon" style="filter: invert(.90)">
+            <a href="/">Movie Recommender</a>
+        </div>
+        <div class="nav-menu">
+            <a href="/"><img src="../static/styles/Android/icons8-home-144(-hdpi).png" alt="Home" style="filter: invert(.90)"></a>
+            <form action="/" method="GET">
+                <input type="search" name="userId"  autocomplete="off" placeholder="user id..." autofocus required />
+                <button type="submit">login</button>    
+            </form>
+        </div>
+    </nav>
+
+    <div class="search_box">
+        <form action="/found" role="search" method="POST">
+            <input id="search" type="search" name="title" autocomplete="off" placeholder="Search movie..." autofocus required />
+            <button type="submit">Go</button>    
+        </form>
+        <div class="result_box"></div>
+    </div>
+
+    <h2>Streaming...</h2>
+    <div class="movie_card" id="tomb">
+        <div class="info_section">
+            <div class="movie_header">
+                <img class="locandina" src="https://mr.comingsoon.it/imgdb/locandine/235x336/53750.jpg" />
+                <h1>Tomb Raider</h1>
+                <h4>2018, Roar Uthaug</h4>
+                <span class="minutes">125 min</span>
+                <p class="type">Action, Fantasy</p>
+            </div>
+            <div class="movie_desc">
+                <p class="text">
+                    Lara Croft, the fiercely independent daughter of a missing adventurer, must push herself beyond her limits when she finds herself on the island where her father disappeared.
+                </p>
+            </div>
+            <div class="movie_social">
+                <ul>
+                    <li><i class="material-icons">share</i></li>
+                    <li><i class="material-icons"></i></li>
+                </ul>
+            </div>
+        </div>
+        <div class="blur_back tomb_back"></div>
+    </div>
+
+    <h2>Based on your intrest</h2>
+    <div class="movie_card_list" onclick="sendData(event)">
+        {%for movie in collab_recommendation%}
+            <div class="small_card">
+                <div class="top">
+                    <img class="locandina" src="{{movie['poster_path']}}" />
+                </div>
+                <div class="labels">
+                    <h2>{{movie['title']}}</h2>
+                    <h5>{{movie['release_date'].split('-')[0]}}</h5>
+                    {%if(movie['adult']=='False')%}
+                        <p style="margin:0; font-family: Verdana, Geneva, Tahoma, sans-serif; color: rgb(125, 175, 44); font-weight: 300;">A</p>
+                    {%endif%} 
+                    <div class="rate" style="display:flex; align-items: center">
+                        <span class="material-icons rating" style="font-size: inherit;">star</span>
+                        <span style="margin-left:5px;  font-family: monospace; color: #424242;">{{movie['average_rating']}}</span>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+    </div>  
+
+
+    <h2>Popular</h2>
+    <div class="movie_card_list" onclick="sendData(event)">
+        {%for movie in popular_movie%}
+            <div class="small_card">
+                <div class="top">
+                    <img class="locandina" src="{{movie['poster_path']}}" />
+                </div>
+                <div class="labels">
+                    <h2>{{movie['title']}}</h2>
+                    <h5>{{movie['release_date'].split('-')[0]}}</h5>
+                    {%if(movie['adult']=='False')%}
+                        <p style="margin:0; font-family: Verdana, Geneva, Tahoma, sans-serif; color: rgb(125, 175, 44); font-weight: 300;">A</p>
+                    {%endif%} 
+                    <div class="rate" style="display:flex; align-items: center">
+                        <span class="material-icons rating" style="font-size: inherit;">star</span>
+                        <span style="margin-left:5px;  font-family: monospace; color: #424242;">{{movie['average_rating']}}</span>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}     
+    </div>
+
+    <script src="{{url_for('static', filename='main.js')}}"></script>
+</body>
+</html>                

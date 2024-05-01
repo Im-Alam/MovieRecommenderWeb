@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender</title>
+    <link rel="stylesheet" href="../static/styles/style.css">
+    <link rel="icon" href="../static/styles/images/moviecolor.svg">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="../static/styles/images/movie.svg" alt="icon" style="filter: invert(.90)">
+            <a href="/">Movie Recommender</a>
+        </div>
+        <div class="nav-menu">
+            <a href="/"><img src="../static/styles/Android/icons8-home-144(-hdpi).png" alt="Home" style="filter: invert(.90)"></a>
+            
+        </div>
+    </nav>
+
+    <div class="search_box">
+        <form action="/found" role="search" method="POST">
+            <input id="search" type="search" name="title"  autocomplete="off" placeholder="Search movie..." autofocus required />
+            <button type="submit">Go</button>    
+        </form>
+        <div class="result_box"></div>
+    </div>
+   
+    <div class="movie_card" >
+        <div class="info_section">
+            <div class="movie_header">
+                <img class="locandina" src="{{data['movie']['poster_path']}}"/>
+                <h1>{{data['movie']['title']}}</h1>
+                <h4>{{data['movie']['release_date'].split('-')[0]}},  {{data['crew'][0]['name']}}</h4>
+                <span class="minutes">{{data['movie']['runtime']}} min</span>
+                <p class="type">{{data['movie']['genre']}},</p>
+
+                <div class="rate" style="display:flex; align-items: center">
+                    <span class="material-icons rating">star</span>
+                    <p style="margin-left:5px;  font-family: monospace; color: #424242;">{{data['movie']['average_rating']}}</p>
+                </div>
+            </div>
+            <div class="movie_desc">
+                <p class="text">
+                    {{data['movie']['overview']}}
+                </p>
+            </div>
+            <div class="movie_social">
+                <ul>
+                    <li><i class="material-icons">share</i></li>
+                    <li><i class="material-icons"></i></li>
+                    <li><i class="material-icons">chat_bubble</i></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="blur_back"><img src="{{data['movie']['backdrop_path']}}" alt=""></div>
+    </div>
+
+    {%for video in data['videos'][0:3]%}
+        <h2>{{video['name']}}</h2>
+        <div class="video_container">
+            <iframe width="560" height="315" src="{{video['lnk']}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    {%endfor%}
+
+    <h2>Cast</h2>
+    <div class="movie_card_list">
+        {%for actor in data['cast']%}
+            {%if actor['profile_path'] != None%}
+                <div class="small_card"  id="crew" style="resize: 0.5;">
+                    <div class="top">
+                        <img class="locandina" src="{{'https://image.tmdb.org/t/p/w185'+actor['profile_path']}}" />
+                    </div>
+                    <div class="labels">
+                        <h2>{{actor['name']}}</h2>
+                        <h4>{{actor['character']}}</h4>
+                    </div>
+                </div>
+            {%endif%}
+        {%endfor%}
+    </div>
+
+    <h2>Crew</h2>
+    <div class="movie_card_list">
+        {%for actor in data['crew']%}
+            {%if actor['profile_path'] != None%}
+                <div class="small_card"  id="crew" style="resize: 0.5;">
+                    <div class="top">
+                        <img class="locandina" src="{{'https://image.tmdb.org/t/p/w185'+actor['profile_path']}}" />
+                    </div>
+                    <div class="labels">
+                        <h2>{{actor['name']}}</h2>
+                        <h4>{{actor['job']}}</h4>
+                    </div>
+                </div>
+            {%endif%}
+        {%endfor%}
+    </div>
+
+    <script src="{{url_for('static', filename='main.js')}}"></script>
+
+</body>
+</html>
