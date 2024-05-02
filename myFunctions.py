@@ -11,10 +11,8 @@ class recomender:
         self.X = models['X']
         self.W = models['W']
         self.B = models['B']
-        content_based_model = models['model']
-        movie_pivot = models['pivot']
-        self.model1 = content_based_model
-        self.movie_pivot = movie_pivot
+        self.model1 = models['model']
+        self.movie_pivot = models['pivot']
     except:
         print('Problem with loading recommender data+++++++++++++++++++')
   
