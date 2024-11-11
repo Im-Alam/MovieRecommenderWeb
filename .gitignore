@@ -1,4 +1,5 @@
 .txt
 .ipynb
+.env 
 RecommenderEnv/*
 /token.txt
