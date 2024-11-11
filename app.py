@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request # type: ignore
 from myFunctions import Movie, crew_cast, recomender,avl_titles, get_video, get_credits
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 movie_data = Movie('MovieRecommenderWeb/IMBD_Movie_data/tmdb_data_small1.csv')
@@ -75,4 +79,5 @@ def show_movie(title):
 
 
 if __name__ == '__main__':
+    
     app.run(debug=True)

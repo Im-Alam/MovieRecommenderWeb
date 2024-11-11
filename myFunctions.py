@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import requests
 import pickle
+import os
 
 class recomender:
   def __init__(self, path_):
@@ -148,8 +149,8 @@ class crew_cast:
 class streaming:
   def __init__(self):
     url = "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
-    f = open('static/token.txt','r')
-    token = f.read()
+    token = os.getenv('token')
+   
     headers = {
         "accept": "application/json",
         "Authorization": "Bearer"+ " " + token
